@@ -1,0 +1,10 @@
+[
+    {
+        "type": 1,
+        "name": "basic electricity tariff"
+    },
+    {
+        "type": 2,
+        "name": "Packaged tariff"
+    }
+]
