@@ -15,7 +15,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "api-ecosystem-for-laravel/dingo-api": "^4.1",
         "darkaonline/l5-swagger": "^8.5.1",
         "guzzlehttp/guzzle": "^7.2",
