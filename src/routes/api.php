@@ -18,12 +18,6 @@ use App\Http\Controllers\AuthController;
 /* @var Router $api */
 $api = app(Router::class);
 $api->version('v1', function ($api) {
-
-    // admin authentication routes
-    $api->post('login', [AuthController::class, 'login']);
-    $api->post('register', [AuthController::class, 'register']);
-    $api->post('logout', ['middleware' => 'api.auth', AuthController::class, 'logout']);
-
     // comparison routes
     $api->post('compare-tariffs', [TariffComparisonController::class, 'tariffComparison']);
 });
