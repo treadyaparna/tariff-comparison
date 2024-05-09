@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Services\Clients\TariffProviders\TariffProviderService;
+use Exception;
 use Illuminate\Support\Collection;
 use InvalidArgumentException;
 
@@ -17,45 +18,48 @@ class TariffComparisonService
      * Calculate the consumption for a given tariff
      *
      * @param $tariff
-     * @param $consumption
+     * @param $annualConsumption
      * @return float
      */
-    public function calculateAnnualConsumptionCosts($tariff, $consumption): float
+    public function calculateAnnualConsumptionCosts($tariff, $annualConsumption): float
     {
-        if (empty($this->strategies)) {
+        if ($this->strategies === [] || empty($this->strategies)) {
             throw new InvalidArgumentException('No strategies provided for tariff calculation.');
         }
 
         foreach ($this->strategies as $strategy) {
             if ($strategy->supports($tariff)) {
-                return $strategy->calculateAnnualConsumptionCosts($tariff, $consumption);
+                return $strategy->calculateAnnualConsumptionCosts($tariff, $annualConsumption);
             }
         }
 
-        throw new InvalidArgumentException('Invalid product type for tariff calculation.');
+        throw new InvalidArgumentException('No tariff available');
     }
 
     /**
      * Calculate the annual costs for all tariffs based on the consumption
      *
-     * @param float $consumption
+     * @param int $annualConsumption
      * @return Collection
+     * @throws Exception
      */
-    public function calculateAnnualCosts(float $consumption): Collection
+    public function calculateAnnualCosts(int $annualConsumption): Collection
     {
         // Get all tariffs
         $tariffs = $this->tariffService->getTariffs();
+        if ($tariffs->isEmpty()) {
+            throw new Exception('No tariffs available');
+        }
 
         // Calculate the annual cost for each tariff based on the consumption
-        // todo: do sorting here
         return collect($tariffs)
-            ->map(function ($tariff) use ($consumption) {
-                $calculatedCosts = $this->calculateAnnualConsumptionCosts($tariff, $consumption);
+            ->map(function ($tariff) use ($annualConsumption) {
+                $calculatedCosts = $this->calculateAnnualConsumptionCosts($tariff, $annualConsumption);
                 return [
-                    'tariffName' => $tariff->name, // Assuming tariff object has a 'name' property
+                    'tariffName' => $tariff->name,
                     'annualCosts' => $calculatedCosts,
                 ];
-            });
+            })->sortBy('annualCosts')->values();
     }
 
 

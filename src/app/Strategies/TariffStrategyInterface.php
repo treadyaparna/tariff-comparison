@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Strategies;
+namespace App\Strategies;
 
 interface TariffStrategyInterface
 {
@@ -16,8 +16,8 @@ interface TariffStrategyInterface
      * Calculate annual consumption costs for a given tariff
      *
      * @param $tariff
-     * @param int $consumption
+     * @param int $annualConsumption
      * @return float
      */
-    public function calculateAnnualConsumptionCosts($tariff, int $consumption): float;
+    public function calculateAnnualConsumptionCosts($tariff, int $annualConsumption): float;
 }

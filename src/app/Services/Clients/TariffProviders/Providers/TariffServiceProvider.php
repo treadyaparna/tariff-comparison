@@ -1,5 +1,5 @@
 <?php
-namespace App\Providers;
+namespace App\Services\Clients\TariffProviders\Providers;
 
 use App\Services\Clients\TariffProviders\TariffProviderService;
 use Illuminate\Http\Client\Factory as HttpClient;

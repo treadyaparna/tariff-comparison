@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Services\Clients\TariffProviders\ValueObjects;
+namespace App\Helpers;
 
-class Price
+readonly class PriceFormatter
 {
     public function __construct(
-        public readonly int $cents,
-        public readonly float $euros,
-        public readonly string $formatted,
+        public int    $cents,
+        public float  $euros,
+        public string $formatted,
     ) {}
 
     public static function fromCents(int $cents): self
@@ -19,7 +19,7 @@ class Price
         );
     }
 
-    public static function fromEuros(int $euros): self
+    public static function fromEuros(float $euros): self
     {
         return new self(
             cents: $euros * 100,

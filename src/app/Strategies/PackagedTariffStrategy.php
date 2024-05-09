@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Strategies;
+namespace App\Strategies;
 
 use App\Services\Clients\TariffProviders\DataTransferObjects\PackagedTariffDTO;
 
@@ -14,7 +14,7 @@ class PackagedTariffStrategy implements TariffStrategyInterface
      */
     public function supports($tariff): bool
     {
-        // Check if the product is an instance of ClothingProduct
+        // Check if the $tariffs is an instance of PackagedTariffDTO
         return $tariff instanceof PackagedTariffDTO;
     }
 
@@ -26,21 +26,21 @@ class PackagedTariffStrategy implements TariffStrategyInterface
      * use the formula: base annual cost + (consumption - included kWh) * additional kWh cost
      *
      * @param PackagedTariffDTO $tariff
-     * @param int $consumption
+     * @param int $annualConsumption
      * @return float
      */
-    public function calculateAnnualConsumptionCosts($tariff, int $consumption): float
+    public function calculateAnnualConsumptionCosts($tariff, int $annualConsumption): float
     {
         // TODO: Check if the calculation is correct
         // Calculate the base annual cost
         $baseAnnualCost = $tariff->baseCost->euros;
 
         // Check if the consumption is less than or equal to the included kWh
-        if ($consumption <= $tariff->includedKwh) {
+        if ($annualConsumption <= $tariff->includedKwh) {
             return $baseAnnualCost;
         } else { // Calculate the additional kWh cost
-            $addtionalConsumption = $consumption - $tariff->includedKwh;
-            $additionalKwhAnnualCost = $tariff->additionalKwhCost->euros * $addtionalConsumption;
+            $additionalConsumption = $annualConsumption - $tariff->includedKwh;
+            $additionalKwhAnnualCost = $tariff->additionalKwhCost->euros * $additionalConsumption;
             return $baseAnnualCost + $additionalKwhAnnualCost;
         }
     }

@@ -46,10 +46,10 @@ class TariffComparisonController extends Controller
      */
     public function tariffComparison(TariffComparisonRequest $request): JsonResponse
     {
-        $consumption = $request->input('consumption');
+        $annualConsumption = $request->input('consumption');
 
         try {
-            return ApiResponse::responseCreated($this->comparisonService->calculateAnnualCosts($consumption));
+            return ApiResponse::responseCreated($this->comparisonService->calculateAnnualCosts($annualConsumption));
         } catch (ResourceException $e) {
             return ApiResponse::response(HttpStatus::CANT_COMPLETE_REQUEST, $e->getMessage());
         } catch (InvalidArgumentException $e) {

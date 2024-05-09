@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Strategies;
+namespace App\Strategies;
 
 use App\Services\Clients\TariffProviders\DataTransferObjects\BasicTariffDTO;
 
@@ -22,14 +22,14 @@ class BasicTariffStrategy implements TariffStrategyInterface
      * Calculate annual consumption costs for a Basic Package Tariff
      *
      * @param BasicTariffDTO $tariff
-     * @param int $consumption
+     * @param int $annualConsumption
      * @return float
      */
-    public function calculateAnnualConsumptionCosts($tariff, int $consumption): float
+    public function calculateAnnualConsumptionCosts($tariff, int $annualConsumption): float
     {
         // todo: check if the calculation is correct
         $baseAnnualCost = $tariff->baseCost->euros * 12;
-        $additionalKwhAnnualCost = $tariff->additionalKwhCost->euros * $consumption;
+        $additionalKwhAnnualCost = $tariff->additionalKwhCost->euros * $annualConsumption;
         return $baseAnnualCost + $additionalKwhAnnualCost;
     }
 }

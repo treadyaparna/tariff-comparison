@@ -24,7 +24,7 @@ class TariffComparisonRequest extends ApiRequest
     public function attributes(): array
     {
         return [
-            'consumption' => 'Annual electricity consumption in kWh'
+            'consumption' => 'annual electricity consumption (kWh)'
         ];
     }
 }

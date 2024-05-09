@@ -1,19 +1,19 @@
 <?php
 namespace App\Services\Clients\TariffProviders\DataTransferObjects;
 
-use App\Services\Clients\TariffProviders\ValueObjects\Price;
+use App\Helpers\PriceFormatter;
 
 class BaseTariffDTO
 {
     public readonly string $name;
     public readonly string $type;
-    public readonly Price $baseCost;
-    public readonly Price $additionalKwhCost;
-    public function __construct($data) {
-        $this->name = $data['name'];
-        $this->type = $data['type'];
-        $this->baseCost = Price::fromEuros($data['baseCost']);
-        $this->additionalKwhCost = Price::fromCents($data['additionalKwhCost']);
+    public readonly PriceFormatter $baseCost;
+    public readonly PriceFormatter $additionalKwhCost;
+    public function __construct($tariff) {
+        $this->name = $tariff['name'];
+        $this->type = $tariff['type'];
+        $this->baseCost = PriceFormatter::fromEuros($tariff['baseCost']);
+        $this->additionalKwhCost = PriceFormatter::fromCents($tariff['additionalKwhCost']);
     }
 
     public function getType(): string {

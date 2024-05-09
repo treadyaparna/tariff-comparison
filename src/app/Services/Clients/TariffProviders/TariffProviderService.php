@@ -10,9 +10,10 @@ use RuntimeException;
 
 class TariffProviderService
 {
-    private string $tariffProviderUri;
+    protected string $tariffProviderUri;
 
-    public function __construct(private readonly HttpClient $httpClient) {
+    public function __construct(private readonly HttpClient $httpClient)
+    {
         $this->tariffProviderUri = config('services.tariff.uri');
     }
 
@@ -23,15 +24,9 @@ class TariffProviderService
      */
     public function getTariffs(): Collection
     {
-        try {
-            $products = $this->fetchData();
-        } catch (Exception $e) {
-            // Log the error
-            // Return a default value
-            return collect([]);
-        }
+        $tariffs = $this->fetchTariffs();
 
-        return $this->transformData($products);
+        return $this->transformTariffs($tariffs);
     }
 
     /**
@@ -39,31 +34,33 @@ class TariffProviderService
      *
      * @return array
      */
-    private function fetchData(): array
+    private function fetchTariffs(): array
     {
-        $response = $this->httpClient->get($this->tariffProviderUri);
-        if ($response->successful()) {
-            $tariffs = $response->json();
-        } else {
-            throw new RuntimeException('Tariff provider service is not available');
+        try {
+            $response = $this->httpClient->get($this->tariffProviderUri);
+            if ($response->successful()) {
+                $tariffs = $response->json();
+                if (!is_array($tariffs)) {
+                    throw new RuntimeException('Invalid data received from the tariff provider service');
+                }
+                return $tariffs;
+            } else {
+                throw new RuntimeException('Tariff provider service returned an error');
+            }
+        } catch (Exception $e) {
+            throw new RuntimeException('Error fetching data from the tariff provider service: ' . $e->getMessage());
         }
-
-        if (!is_array($tariffs)) {
-            throw new RuntimeException('Invalid data received from the tariff provider service');
-        }
-
-        return $tariffs;
     }
 
     /**
      * Transform the data into a collection of TariffDTO objects
      *
-     * @param array $data
+     * @param array $tariffs
      * @return Collection
      */
-    private function transformData(array $data): Collection
+    private function transformTariffs(array $tariffs): Collection
     {
-        return collect($data)
-            ->map(fn(array $item) => TariffDTOFactory::create($item));
+        return collect($tariffs)
+            ->map(fn(array $tariff) => TariffDTOFactory::create($tariff));
     }
 }

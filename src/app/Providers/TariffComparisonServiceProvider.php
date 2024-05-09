@@ -3,10 +3,10 @@
 namespace App\Providers;
 
 use App\Services\Clients\TariffProviders\TariffProviderService;
-use Illuminate\Support\ServiceProvider;
 use App\Services\TariffComparisonService;
-use App\Services\Strategies\BasicTariffStrategy;
-use App\Services\Strategies\PackagedTariffStrategy;
+use App\Strategies\BasicTariffStrategy;
+use App\Strategies\PackagedTariffStrategy;
+use Illuminate\Support\ServiceProvider;
 
 class TariffComparisonServiceProvider extends ServiceProvider
 {

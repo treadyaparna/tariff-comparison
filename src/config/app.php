@@ -191,7 +191,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         // Custom Service Providers
-        App\Providers\TariffServiceProvider::class,
+        \App\Services\Clients\TariffProviders\Providers\TariffServiceProvider::class,
         App\Providers\TariffComparisonServiceProvider::class,
     ],
 

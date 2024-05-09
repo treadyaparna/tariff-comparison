@@ -31,6 +31,6 @@ return [
     ],
 
     "tariff" => [
-        "uri" => env("DATA_PROVIDER_URI"),
+        "uri" => env("TARIFF_PROVIDER_SERVICE_URL"),
     ],
 ];
