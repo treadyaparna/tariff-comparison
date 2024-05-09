@@ -8,6 +8,8 @@ use Illuminate\Support\Collection;
 class TariffTypeService
 {
     /**
+     * Get all tariff types
+     *
      * @return Collection<TariffTypeDTO>
      */
     public function getTariffTypes(): Collection

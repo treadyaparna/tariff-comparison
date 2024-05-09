@@ -5,11 +5,9 @@ class TariffDTOFactory
 {
     public static function create(array $data): BaseTariffDTO
     {
-        switch ($data['type']) {
-            case 2:
-                return new PackagedTariffDTO($data);
-            default:
-                return new BasicElectricityTariffDTO($data);
-        }
+        return match ($data['type']) {
+            2 => new PackagedTariffDTO($data),
+            default => new BasicElectricityTariffDTO($data),
+        };
     }
 }

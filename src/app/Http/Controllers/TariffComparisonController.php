@@ -3,26 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Enums\HttpStatus;
-use App\Http\Requests\CompareTariffRequest;
+use App\Http\Requests\TariffComparisonRequest;
 use App\Response\ApiResponse;
-use App\Services\ComparisonService;
-use Carbon\Carbon;
+use App\Services\TariffComparisonService;
 use Dingo\Api\Exception\ResourceException;
-use Dingo\Api\Exception\ValidationHttpException;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use InvalidArgumentException;
 
-class ComparisonController extends Controller
+class TariffComparisonController extends Controller
 {
-    public function __construct(private ComparisonService $comparisonService) {}
+    public function __construct(private readonly TariffComparisonService $comparisonService) {}
 
     /**
      * @OA\Post(
-     *   path="/api/tariff-comparison",
-     *   summary="Compare tariffs",
-     *   tags={"tariff-comparison"},
-     *   operationId="compareTariff",
+     *   path="/api/compare-tariffs",
+     *   summary="Compare Annual Tariffs based on given consumption",
+     *   tags={"compare-tariffs"},
+     *   operationId="tariffComparison",
      *   @OA\RequestBody(
      *     @OA\JsonContent(
      *       ref="#/components/schemas/TariffComparison",
@@ -46,15 +44,12 @@ class ComparisonController extends Controller
      *   ),
      * )
      */
-    public function compareTariff(CompareTariffRequest $request): JsonResponse
+    public function tariffComparison(TariffComparisonRequest $request): JsonResponse
     {
         $consumption = $request->input('consumption');
 
         try {
-           // return $this->comparisonService->compareTariff($consumption);
-           // return ApiResponse::response(HttpStatus::HTTP_OK, $this->comparisonService->getTariffs());
-            return ApiResponse::responseCreated($this->comparisonService->getTariffs());
-           // return ApiResponse::responseCreated($this->comparisonService->getTariffTypes());
+            return ApiResponse::responseCreated($this->comparisonService->calculateAnnualCosts($consumption));
         } catch (ResourceException $e) {
             return ApiResponse::response(HttpStatus::CANT_COMPLETE_REQUEST, $e->getMessage());
         } catch (InvalidArgumentException $e) {

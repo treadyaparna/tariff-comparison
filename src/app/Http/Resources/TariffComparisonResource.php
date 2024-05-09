@@ -2,9 +2,6 @@
 
 namespace App\Http\Resources;
 
-
-use App\Models\Transaction;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -22,7 +19,7 @@ class TariffComparisonResource extends JsonResource
      *     @OA\Property(
      *         property="consumption",
      *         type="integer",
-     *         description="The consumption value",
+     *         description="The annual electricity consumption in kWh",
      *         example=1000
      *     ),
      *     @OA\Property(
@@ -30,7 +27,7 @@ class TariffComparisonResource extends JsonResource
      *         type="array",
      *         @OA\Items(
      *             type="object",
-     *             @OA\Property(property="name", type="string", example="basic electricity tariff"),
+     *             @OA\Property(property="tariffName", type="string", example="basic electricity tariff"),
      *             @OA\Property(property="annualCosts", type="integer", example=830)
      *         )
      *     )

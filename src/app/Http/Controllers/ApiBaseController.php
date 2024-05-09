@@ -36,10 +36,11 @@ class ApiBaseController extends Controller
 {
     /**
      * Standard response with data
+     *
      * @param array|Collection $data
      * @return JsonResponse
      */
-    public function response($data)
+    public function response(array|Collection $data): JsonResponse
     {
         if ($data instanceof Collection) {
             $data = $data->toArray();

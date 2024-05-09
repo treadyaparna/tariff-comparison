@@ -7,13 +7,10 @@ use Illuminate\Support\ServiceProvider;
 
 class TariffServiceProvider extends ServiceProvider
 {
-    public function register()
+    public function register(): void
     {
-
         $this->app->singleton(TariffService::class, function ($app) {
-            return new TariffService(
-                $app->make(HttpClient::class)
-            );
+            return new TariffService($app->make(HttpClient::class));
         });
     }
 }

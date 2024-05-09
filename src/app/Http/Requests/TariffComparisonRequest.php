@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class CompareTariffRequest extends ApiRequest
+class TariffComparisonRequest extends ApiRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -24,7 +24,7 @@ class CompareTariffRequest extends ApiRequest
     public function attributes(): array
     {
         return [
-            'consumption' => 'user electricity consumption in kWh'
+            'consumption' => 'Annual electricity consumption in kWh'
         ];
     }
 }

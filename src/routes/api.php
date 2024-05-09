@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ComparisonController;
+use App\Http\Controllers\TariffComparisonController;
 use Dingo\Api\Routing\Router;
 use App\Http\Controllers\AuthController;
 
@@ -25,8 +25,7 @@ $api->version('v1', function ($api) {
     $api->post('logout', ['middleware' => 'api.auth', AuthController::class, 'logout']);
 
     // comparison routes
-    $api->post('tariff-comparison', [ComparisonController::class, 'compareTariff']);
-    //$api->get('tariffs', [ComparisonController::class, 'getTariffs']);
+    $api->post('compare-tariffs', [TariffComparisonController::class, 'tariffComparison']);
 });
 
 

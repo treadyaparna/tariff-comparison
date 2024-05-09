@@ -13,26 +13,26 @@ class ApiResponse
 {
     /**
      * @param integer $code
-     * @param string|null $msg
+     * @param string|null $message
      * @return JsonResponse
      */
-    public static final function response(int $code, string $msg = null): JsonResponse
+    public static final function response(int $code, string $message = null): JsonResponse
     {
         return response()->json(array(
             'code' => $code,
-            'message' => $msg ?? HttpStatus::MESSAGES[$code]
+            'message' => $message ?? HttpStatus::MESSAGES[$code]
         ), $code);
     }
 
     /**
-     * @param string|null $msg
+     * @param string|null $message
      * @return JsonResponse
      */
-    public static final function responseOK(string $msg = null): JsonResponse
+    public static final function responseOK(string $message = null): JsonResponse
     {
         return self::response(
             code: HttpStatus::HTTP_OK,
-            msg: empty($msg) ? 'OK' : $msg
+            message: empty($message) ? 'OK' : $message
         );
     }
 

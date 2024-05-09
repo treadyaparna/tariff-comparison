@@ -23,13 +23,5 @@ class BaseTariffDTO
     public function getName(): string {
         return $this->name;
     }
-
-    public function getBaseCost(): Price {
-        return $this->baseCost;
-    }
-
-    public function getAdditionalKwhCost(): Price {
-        return $this->additionalKwhCost;
-    }
 }
 

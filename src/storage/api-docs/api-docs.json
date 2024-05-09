@@ -432,13 +432,13 @@
                 ]
             }
         },
-        "/api/tariff-comparison": {
+        "/api/compare-tariffs": {
             "post": {
                 "tags": [
-                    "tariff-comparison"
+                    "compare-tariffs"
                 ],
-                "summary": "Compare tariffs",
-                "operationId": "compareTariff",
+                "summary": "Compare Annual Tariffs based on given consumption",
+                "operationId": "tariffComparison",
                 "requestBody": {
                     "content": {
                         "application/json": {
