@@ -1,9 +1,8 @@
 <?php
-// app/Services/Strategies/ElectronicDiscountStrategy.php
 
 namespace App\Services\Strategies;
 
-use App\Services\Clients\Tariff\DataTransferObjects\BasicElectricityTariffDTO;
+use App\Services\Clients\TariffProviders\DataTransferObjects\BasicTariffDTO;
 
 class BasicTariffStrategy implements TariffStrategyInterface
 {
@@ -15,14 +14,14 @@ class BasicTariffStrategy implements TariffStrategyInterface
      */
     public function supports($tariff): bool
     {
-        // Check if the tariff is an instance of BasicElectricityTariffDTO
-        return $tariff instanceof BasicElectricityTariffDTO;
+        // Check if the tariff is an instance of BasicTariffDTO
+        return $tariff instanceof BasicTariffDTO;
     }
 
     /**
      * Calculate annual consumption costs for a Basic Package Tariff
      *
-     * @param BasicElectricityTariffDTO $tariff
+     * @param BasicTariffDTO $tariff
      * @param int $consumption
      * @return float
      */

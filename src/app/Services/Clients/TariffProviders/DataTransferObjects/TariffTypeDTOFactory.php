@@ -1,5 +1,5 @@
 <?php
-namespace App\Services\Clients\Tariff\DataTransferObjects;
+namespace App\Services\Clients\TariffProviders\DataTransferObjects;
 
 class TariffTypeDTOFactory
 {

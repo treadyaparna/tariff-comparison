@@ -1,5 +1,4 @@
 <?php
-// app/Services/Strategies/DiscountStrategyInterface.php
 
 namespace App\Services\Strategies;
 

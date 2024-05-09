@@ -1,15 +1,14 @@
 <?php
-// app/Providers/DiscountServiceProvider.php
 
 namespace App\Providers;
 
-use App\Services\Clients\Tariff\TariffService;
+use App\Services\Clients\TariffProviders\TariffProviderService;
 use Illuminate\Support\ServiceProvider;
 use App\Services\TariffComparisonService;
 use App\Services\Strategies\BasicTariffStrategy;
-use App\Services\Strategies\PackageTariffStrategy;
+use App\Services\Strategies\PackagedTariffStrategy;
 
-class ConsumptionServiceProvider extends ServiceProvider
+class TariffComparisonServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
@@ -18,10 +17,10 @@ class ConsumptionServiceProvider extends ServiceProvider
             // add tariff strategies
             $strategies = [
                 new BasicTariffStrategy(),
-                new PackageTariffStrategy(),
+                new PackagedTariffStrategy(),
             ];
 
-            return new TariffComparisonService($app->make(TariffService::class), $strategies);
+            return new TariffComparisonService($app->make(TariffProviderService::class), $strategies);
         });
     }
 }

@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Services\Clients\Tariff;
+namespace App\Services\Clients\TariffProviders;
 
-use App\Services\Clients\Tariff\DataTransferObjects\TariffDTOFactory;
+use App\Services\Clients\TariffProviders\DataTransferObjects\TariffDTOFactory;
 use Exception;
 use Illuminate\Http\Client\Factory as HttpClient;
 use Illuminate\Support\Collection;
 use RuntimeException;
 
-class TariffService
+class TariffProviderService
 {
-    private string $tariffUri;
+    private string $tariffProviderUri;
 
-    public function __construct(private HttpClient $httpClient) {
-        $this->tariffUri = config('services.tariff.uri');
+    public function __construct(private readonly HttpClient $httpClient) {
+        $this->tariffProviderUri = config('services.tariff.uri');
     }
 
     /**
@@ -41,20 +41,18 @@ class TariffService
      */
     private function fetchData(): array
     {
-        $response = $this->httpClient->get($this->tariffUri);
+        $response = $this->httpClient->get($this->tariffProviderUri);
         if ($response->successful()) {
-            $data = $response->json();
+            $tariffs = $response->json();
         } else {
-            // Handle the error...
-            throw new RuntimeException('Server error');
+            throw new RuntimeException('Tariff provider service is not available');
         }
 
-        // Validate the data
-        if (!is_array($data)) {
-            throw new RuntimeException('Invalid data format');
+        if (!is_array($tariffs)) {
+            throw new RuntimeException('Invalid data received from the tariff provider service');
         }
 
-        return $data;
+        return $tariffs;
     }
 
     /**

@@ -2,15 +2,15 @@
 
 namespace App\Services;
 
-use App\Services\Clients\Tariff\TariffService;
+use App\Services\Clients\TariffProviders\TariffProviderService;
 use Illuminate\Support\Collection;
 use InvalidArgumentException;
 
 class TariffComparisonService
 {
     public function __construct(
-        private readonly TariffService $tariffService,
-        protected array $strategies
+        private readonly TariffProviderService $tariffService,
+        protected array                        $strategies
     ) {}
 
     /**

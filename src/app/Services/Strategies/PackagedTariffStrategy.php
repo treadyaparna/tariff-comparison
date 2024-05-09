@@ -1,11 +1,10 @@
 <?php
-// app/Services/Strategies/ElectronicDiscountStrategy.php
 
 namespace App\Services\Strategies;
 
-use App\Services\Clients\Tariff\DataTransferObjects\PackagedTariffDTO;
+use App\Services\Clients\TariffProviders\DataTransferObjects\PackagedTariffDTO;
 
-class PackageTariffStrategy implements TariffStrategyInterface
+class PackagedTariffStrategy implements TariffStrategyInterface
 {
     /**
      * Check if the tariff is supported the package tariff

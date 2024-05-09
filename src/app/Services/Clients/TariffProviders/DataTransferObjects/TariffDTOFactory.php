@@ -1,5 +1,5 @@
 <?php
-namespace App\Services\Clients\Tariff\DataTransferObjects;
+namespace App\Services\Clients\TariffProviders\DataTransferObjects;
 
 class TariffDTOFactory
 {
@@ -7,7 +7,7 @@ class TariffDTOFactory
     {
         return match ($data['type']) {
             2 => new PackagedTariffDTO($data),
-            default => new BasicElectricityTariffDTO($data),
+            default => new BasicTariffDTO($data),
         };
     }
 }

@@ -192,7 +192,7 @@ return [
 
         // Custom Service Providers
         App\Providers\TariffServiceProvider::class,
-        App\Providers\ConsumptionServiceProvider::class,
+        App\Providers\TariffComparisonServiceProvider::class,
     ],
 
     /*

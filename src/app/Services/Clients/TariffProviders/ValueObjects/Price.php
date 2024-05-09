@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Clients\Tariff\ValueObjects;
+namespace App\Services\Clients\TariffProviders\ValueObjects;
 
 class Price
 {

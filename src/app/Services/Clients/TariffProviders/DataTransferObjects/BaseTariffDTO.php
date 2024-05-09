@@ -1,7 +1,7 @@
 <?php
-namespace App\Services\Clients\Tariff\DataTransferObjects;
+namespace App\Services\Clients\TariffProviders\DataTransferObjects;
 
-use App\Services\Clients\Tariff\ValueObjects\Price;
+use App\Services\Clients\TariffProviders\ValueObjects\Price;
 
 class BaseTariffDTO
 {
