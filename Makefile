@@ -1,4 +1,4 @@
-run-app-with-setup-db:
+run-setup:
 	cp ./src/.env.example ./src/.env
 	docker compose build
 	docker compose up -d
@@ -8,14 +8,9 @@ run-docs:
 	docker exec php /bin/sh -c "php artisan l5-swagger:generate"
 
 run-app:
+	docker compose build
 	docker compose up -d
 
 kill-app:
 	docker compose down
 	docker system prune
-
-enter-nginx-container:
-	docker exec -it nginx /bin/sh
-
-enter-php-container:
-	docker exec -it php /bin/sh
