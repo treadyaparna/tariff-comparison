@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\TariffComparisonController;
 use Dingo\Api\Routing\Router;
-use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------

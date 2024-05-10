@@ -8,8 +8,8 @@
 namespace App\Http\Controllers;
 
 
-use Illuminate\Support\Collection;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Collection;
 
 /**
  * @OA\OpenApi(

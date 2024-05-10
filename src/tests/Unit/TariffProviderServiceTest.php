@@ -2,8 +2,6 @@
 
 namespace Tests\Unit;
 
-use App\Services\Clients\TariffProviders\DataTransferObjects\BasicTariffDTO;
-use App\Services\Clients\TariffProviders\DataTransferObjects\PackagedTariffDTO;
 use App\Services\Clients\TariffProviders\TariffProviderService;
 use Illuminate\Http\Client\Factory as HttpClient;
 use Illuminate\Support\Collection;
