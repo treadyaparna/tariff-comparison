@@ -7,11 +7,8 @@
 
 namespace App\Enums;
 
-
 abstract class HttpStatus
 {
-    const CUSTOM_INVALID = 0;
-
     // [Informational 1xx]
     const HTTP_CONTINUE = 100;
     const HTTP_SWITCHING_PROTOCOLS = 101;
@@ -36,7 +33,6 @@ abstract class HttpStatus
     const HTTP_TEMPORARY_REDIRECT = 307;
 
     // [Client Error 4xx]
-    const errorCodesBeginAt = 400;
     const HTTP_BAD_REQUEST = 400;
     const HTTP_UNAUTHORIZED = 401;
     const HTTP_PAYMENT_REQUIRED = 402;
@@ -56,7 +52,6 @@ abstract class HttpStatus
     const HTTP_REQUESTED_RANGE_NOT_SATISFIABLE = 416;
     const HTTP_EXPECTATION_FAILED = 417;
 
-
     // [Server Error 5xx]
     const HTTP_INTERNAL_SERVER_ERROR = 500;
     const HTTP_NOT_IMPLEMENTED = 501;
@@ -69,64 +64,75 @@ abstract class HttpStatus
     const CANT_COMPLETE_VALIDATION = 422;
     const CANT_COMPLETE_REQUEST = 550;
 
+    // [Tariff Comparison Errors]
+    const NO_TARIFFS_AVAILABLE = 601;
+    const NO_STRATEGY_AVAILABLE = 602;
+    const TARIFF_PROVIDER_ERROR = 603;
+    const INVALID_TARIFF_PROVIDER_ERROR = 604;
+    const INVALID_TARIFF_TYPE = 605;
 
     public const MESSAGES = [
-
-        0 => '0 invalid request',
-
         // [Informational 1xx]
-        100 => '100 Continue',
-        101 => '101 Switching Protocols',
+        self::HTTP_CONTINUE => 'Continue',
+        self::HTTP_SWITCHING_PROTOCOLS => 'Switching Protocols',
 
         // [Successful 2xx]
-        200 => '200 OK',
-        201 => '201 Created',
-        202 => '202 Accepted',
-        203 => '203 Non-Authoritative Information',
-        204 => '204 No Content',
-        205 => '205 Reset Content',
-        206 => '206 Partial Content',
+        self::HTTP_OK => 'OK',
+        self::HTTP_CREATED => 'Created',
+        self::HTTP_ACCEPTED => 'Accepted',
+        self::HTTP_NONAUTHORITATIVE_INFORMATION => 'Non-Authoritative Information',
+        self::HTTP_NO_CONTENT => 'No Content',
+        self::HTTP_RESET_CONTENT => 'Reset Content',
+        self::HTTP_PARTIAL_CONTENT => 'Partial Content',
 
         // [Redirection 3xx]
-        300 => '300 Multiple Choices',
-        301 => '301 Moved Permanently',
-        302 => '302 Found',
-        303 => '303 See Other',
-        304 => '304 Not Modified',
-        305 => '305 Use Proxy',
-        306 => '306 (Unused)',
-        307 => '307 Temporary Redirect',
+        self::HTTP_MULTIPLE_CHOICES => 'Multiple Choices',
+        self::HTTP_MOVED_PERMANENTLY => 'Moved Permanently',
+        self::HTTP_FOUND => 'Found',
+        self::HTTP_SEE_OTHER => 'See Other',
+        self::HTTP_NOT_MODIFIED => 'Not Modified',
+        self::HTTP_USE_PROXY => 'Use Proxy',
+        self::HTTP_UNUSED => '(Unused)',
+        self::HTTP_TEMPORARY_REDIRECT => 'Temporary Redirect',
 
         // [Client Error 4xx]
-        400 => '400 Bad Request',
-        401 => '401 Unauthorized',
-        402 => '402 Payment Required',
-        403 => '403 Forbidden',
-        404 => '404 Not Found',
-        405 => '405 Method Not Allowed',
-        406 => '406 Not Acceptable',
-        407 => '407 Proxy Authentication Required',
-        408 => '408 Request Timeout',
-        409 => '409 Conflict',
-        410 => '410 Gone',
-        411 => '411 Length Required',
-        412 => '412 Precondition Failed',
-        413 => '413 Request Entity Too Large',
-        414 => '414 Request-URI Too Long',
-        415 => '415 Unsupported Media Type',
-        416 => '416 Requested Range Not Satisfiable',
-        417 => '417 Expectation Failed',
+        self::HTTP_BAD_REQUEST => 'Bad Request',
+        self::HTTP_UNAUTHORIZED => 'Unauthorized',
+        self::HTTP_PAYMENT_REQUIRED => 'Payment Required',
+        self::HTTP_FORBIDDEN => 'Forbidden',
+        self::HTTP_NOT_FOUND => 'Not Found',
+        self::HTTP_METHOD_NOT_ALLOWED => 'Method Not Allowed',
+        self::HTTP_NOT_ACCEPTABLE => 'Not Acceptable',
+        self::HTTP_PROXY_AUTHENTICATION_REQUIRED => 'Proxy Authentication Required',
+        self::HTTP_REQUEST_TIMEOUT => 'Request Timeout',
+        self::HTTP_CONFLICT => 'Conflict',
+        self::HTTP_GONE => 'Gone',
+        self::HTTP_LENGTH_REQUIRED => 'Length Required',
+        self::HTTP_PRECONDITION_FAILED => 'Precondition Failed',
+        self::HTTP_REQUEST_ENTITY_TOO_LARGE => 'Request Entity Too Large',
+        self::HTTP_REQUEST_URI_TOO_LONG => 'Request-URI Too Long',
+        self::HTTP_UNSUPPORTED_MEDIA_TYPE => 'Unsupported Media Type',
+        self::HTTP_REQUESTED_RANGE_NOT_SATISFIABLE => 'Requested Range Not Satisfiable',
+        self::HTTP_EXPECTATION_FAILED => 'Expectation Failed',
 
         // [Server Error 5xx]
-        500 => '500 Internal Server Error',
-        501 => '501 Not Implemented',
-        502 => '502 Bad Gateway',
-        503 => '503 Service Unavailable',
-        504 => '504 Gateway Timeout',
-        505 => '505 HTTP Version Not Supported',
+        self::HTTP_INTERNAL_SERVER_ERROR => 'Internal Server Error',
+        self::HTTP_NOT_IMPLEMENTED => 'Not Implemented',
+        self::HTTP_BAD_GATEWAY => 'Bad Gateway',
+        self::HTTP_SERVICE_UNAVAILABLE => 'Service Unavailable',
+        self::HTTP_GATEWAY_TIMEOUT => 'Gateway Timeout',
+        self::HTTP_VERSION_NOT_SUPPORTED => 'HTTP Version Not Supported',
 
         // [Custom Messages]
         self::CANT_COMPLETE_REQUEST => 'Cannot complete request',
         self::CANT_COMPLETE_VALIDATION => 'The information provided is not valid',
+
+        // [Tariff Comparison Messages]
+        self::NO_TARIFFS_AVAILABLE => 'No Tariffs available',
+        self::NO_STRATEGY_AVAILABLE => 'No Strategy available',
+        self::TARIFF_PROVIDER_ERROR => 'Error fetching Tariffs',
+        self::INVALID_TARIFF_PROVIDER_ERROR => 'Invalid data received from the tariff provider',
+        self::INVALID_TARIFF_TYPE => 'Invalid tariff type provided.',
+
     ];
 }

@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Services\Clients\TariffProviders\Exceptions\TariffProviderException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -40,5 +41,30 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    /**
+     * Render an exception into an HTTP response.
+     *
+     * @param $request
+     * @param Throwable $exception
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Symfony\Component\HttpFoundation\Response
+     * @throws Throwable
+     */
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof NoStrategiesException || $exception instanceof NoTariffsException) {
+            return response()->json([
+                'error' => $exception->getMessage(),
+            ], 400);
+        }
+
+        if ($exception instanceof TariffProviderException) {
+            return response()->json([
+                'error' => $exception->getMessage(),
+            ], 500);
+        }
+
+        return parent::render($request, $exception);
     }
 }

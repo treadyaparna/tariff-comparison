@@ -3,6 +3,8 @@
 namespace App\Services\Clients\TariffProviders;
 
 use App\Services\Clients\TariffProviders\DataTransferObjects\TariffDTOFactory;
+use App\Services\Clients\TariffProviders\Exceptions\InvalidTariffProviderException;
+use App\Services\Clients\TariffProviders\Exceptions\TariffProviderException;
 use Exception;
 use Illuminate\Http\Client\Factory as HttpClient;
 use Illuminate\Support\Collection;
@@ -24,7 +26,11 @@ class TariffProviderService
      */
     public function getTariffs(): Collection
     {
-        $tariffs = $this->fetchTariffs();
+        try {
+            $tariffs = $this->fetchTariffs();
+        } catch (Exception $e) {
+            throw new RuntimeException($e->getMessage(), $e->getCode());
+        }
 
         return $this->transformTariffs($tariffs);
     }
@@ -33,23 +39,21 @@ class TariffProviderService
      * Fetch the data from the external tariff provider service
      *
      * @return array
+     * @throws TariffProviderException|InvalidTariffProviderException
      */
     private function fetchTariffs(): array
     {
-        try {
-            $response = $this->httpClient->get($this->tariffProviderUri);
-            if ($response->successful()) {
-                $tariffs = $response->json();
-                if (!is_array($tariffs)) {
-                    throw new RuntimeException('Invalid data received from the tariff provider service');
-                }
-                return $tariffs;
-            } else {
-                throw new RuntimeException('Tariff provider service returned an error');
+        $response = $this->httpClient->get($this->tariffProviderUri);
+        if ($response->successful()) {
+            $tariffs = $response->json();
+
+            if (!is_array($tariffs)) {
+                throw new InvalidTariffProviderException();
             }
-        } catch (Exception $e) {
-            throw new RuntimeException('Error fetching data from the tariff provider service: ' . $e->getMessage());
+
+            return $tariffs;
         }
+        throw new TariffProviderException();
     }
 
     /**

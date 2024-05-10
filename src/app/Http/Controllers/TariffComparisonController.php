@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\HttpStatus;
 use App\Http\Requests\TariffComparisonRequest;
 use App\Response\ApiResponse;
 use App\Services\TariffComparisonService;
-use Dingo\Api\Exception\ResourceException;
 use Exception;
 use Illuminate\Http\JsonResponse;
-use InvalidArgumentException;
 
 class TariffComparisonController extends Controller
 {
-    public function __construct(private readonly TariffComparisonService $comparisonService) {}
+    public function __construct(private readonly TariffComparisonService $tariffComparisonService) {}
 
     /**
      * @OA\Post(
@@ -49,11 +46,7 @@ class TariffComparisonController extends Controller
         $annualConsumption = $request->input('consumption');
 
         try {
-            return ApiResponse::responseCreated($this->comparisonService->calculateAnnualCosts($annualConsumption));
-        } catch (ResourceException $e) {
-            return ApiResponse::response(HttpStatus::CANT_COMPLETE_REQUEST, $e->getMessage());
-        } catch (InvalidArgumentException $e) {
-            return ApiResponse::response(HttpStatus::CANT_COMPLETE_VALIDATION, $e->getMessage());
+            return ApiResponse::responseCreated($this->tariffComparisonService->calculateAnnualCosts($annualConsumption));
         } catch (Exception $e) {
             return ApiResponse::response($e->getCode(), $e->getMessage());
         }

@@ -2,10 +2,11 @@
 
 namespace App\Services;
 
+use App\Exceptions\NoStrategiesException;
+use App\Exceptions\NoTariffsException;
 use App\Services\Clients\TariffProviders\TariffProviderService;
 use Exception;
 use Illuminate\Support\Collection;
-use InvalidArgumentException;
 
 class TariffComparisonService
 {
@@ -20,11 +21,12 @@ class TariffComparisonService
      * @param $tariff
      * @param $annualConsumption
      * @return float
+     * @throws NoStrategiesException|NoTariffsException
      */
     public function calculateAnnualConsumptionCosts($tariff, $annualConsumption): float
     {
         if ($this->strategies === [] || empty($this->strategies)) {
-            throw new InvalidArgumentException('No strategies provided for tariff calculation.');
+            throw new NoStrategiesException();
         }
 
         foreach ($this->strategies as $strategy) {
@@ -33,7 +35,7 @@ class TariffComparisonService
             }
         }
 
-        throw new InvalidArgumentException('No tariff available');
+        throw new NoTariffsException();
     }
 
     /**
@@ -48,7 +50,7 @@ class TariffComparisonService
         // Get all tariffs
         $tariffs = $this->tariffService->getTariffs();
         if ($tariffs->isEmpty()) {
-            throw new Exception('No tariffs available');
+            throw new NoTariffsException();
         }
 
         // Calculate the annual cost for each tariff based on the consumption
