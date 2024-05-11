@@ -97,7 +97,7 @@ Calculation Model,
 
 The following sequence diagram illustrates the flow of the tariff comparison process:
 
-<img src="Tariff.png" alt="Tariff Comparison Sequence diagram ">
+![Tariff.png](Tariff.png)
 
 
 ## Technologies Used
@@ -112,7 +112,7 @@ The project is built using the following technologies:
 - [Composer](https://getcomposer.org/)
 - [Swagger](https://swagger.io/)
 - [PHPUnit 10](https://phpunit.de/)
-- [Makefile](https://www.gnu.org/software/make/)
+- [Makefile](https://makefiletutorial.com/)
 
 
 ## Configuration
@@ -150,7 +150,7 @@ Run command `docker exec -it php /bin/sh` to access the `php` container.
 make run-setup
 ```
 
-## API Endpoints
+## Endpoints
 
 As per functional requirements, the following API endpoints are available:
 
@@ -186,10 +186,12 @@ php artisan test
 
 This command initiates the test suite, running all defined tests to verify that the application behaves as expected and meets quality standards.
 
+![img_1.png](img_1.png)
 
-## Contributors
 
-**Aparna Saha** ([LinkedIn](https://www.linkedin.com/in/aparnasaha/))
+## Contact
+
+If you have any questions or feedback, please reach out to me: **Aparna Saha** ([LinkedIn](https://www.linkedin.com/in/aparnasaha/))
 
 ## License
 
