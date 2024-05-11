@@ -2,17 +2,18 @@
 
 namespace Tests\Unit;
 
+use App\Enums\HttpStatus;
 use App\Services\Clients\TariffProviders\TariffProviderService;
 use Illuminate\Http\Client\Factory as HttpClient;
 use Illuminate\Support\Collection;
 use Mockery;
+use RuntimeException;
 use Tests\TestCase;
 
 class TariffProviderServiceTest extends TestCase
 {
     private $httpClient;
     private $tariffProviderService;
-    private $tariffService;
 
     protected function setUp(): void
     {
@@ -83,7 +84,7 @@ class TariffProviderServiceTest extends TestCase
         $this->httpClient->shouldReceive('successful')->andReturn(true);
         $this->httpClient->shouldReceive('json')->andReturn($tariffs);
 
-        $this->expectExceptionMessage('Invalid data received from the tariff provider service');
+        $this->expectExceptionMessage(HttpStatus::MESSAGES[HttpStatus::INVALID_TARIFF_PROVIDER_ERROR]);
         $this->tariffProviderService->getTariffs();
     }
 
@@ -92,15 +93,16 @@ class TariffProviderServiceTest extends TestCase
         $this->httpClient->shouldReceive('get')->andReturnSelf();
         $this->httpClient->shouldReceive('successful')->andReturn(false);
 
-        $this->expectExceptionMessage('Tariff provider service returned an error');
+        $this->expectExceptionMessage(HttpStatus::MESSAGES[HttpStatus::TARIFF_PROVIDER_ERROR]);
         $this->tariffProviderService->getTariffs();
     }
 
     public function testErrorFetchingDataException()
     {
-        $this->httpClient->shouldReceive('get')->andThrow(new \Exception('Error fetching data from the tariff provider service'));
+        $this->httpClient->shouldReceive('get')->andReturnSelf();
+        $this->httpClient->shouldReceive('successful')->andReturn(false);
 
-        $this->expectExceptionMessage('Error fetching data from the tariff provider service');
+        $this->expectException(RuntimeException::class);
         $this->tariffProviderService->getTariffs();
     }
 

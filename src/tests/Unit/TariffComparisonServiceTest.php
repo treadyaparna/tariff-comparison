@@ -2,13 +2,14 @@
 
 namespace Tests\Unit;
 
+use App\Enums\HttpStatus;
+use App\Exceptions\NoTariffsException;
 use App\Services\Clients\TariffProviders\DataTransferObjects\BasicTariffDTO;
 use App\Services\Clients\TariffProviders\DataTransferObjects\PackagedTariffDTO;
 use App\Services\Clients\TariffProviders\TariffProviderService;
 use App\Services\TariffComparisonService;
 use App\Strategies\TariffStrategyInterface;
 use Exception;
-use InvalidArgumentException;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 
@@ -91,8 +92,8 @@ class TariffComparisonServiceTest extends TestCase
 
     public function testCalculateAnnualCostsWithNoTariff()
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('No tariff available');
+        $this->expectException(NoTariffsException::class);
+        $this->expectExceptionMessage(HttpStatus::MESSAGES[HttpStatus::NO_TARIFFS_AVAILABLE]);
 
         $this->tariffService->shouldReceive('getTariffs')->andReturn($this->tariffs);
         $this->strategies[0]->shouldReceive('supports')->andReturn(false);
