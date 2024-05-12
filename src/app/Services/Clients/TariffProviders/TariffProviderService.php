@@ -23,16 +23,16 @@ class TariffProviderService
      * Get the tariffs from the external tariff provider service
      *
      * @return Collection
+     * @throws RuntimeException
      */
     public function getTariffs(): Collection
     {
         try {
             $tariffs = $this->fetchTariffs();
+            return $this->transformTariffs($tariffs);
         } catch (Exception $e) {
-            throw new RuntimeException($e->getMessage(), $e->getCode());
+            throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
         }
-
-        return $this->transformTariffs($tariffs);
     }
 
     /**
@@ -43,17 +43,23 @@ class TariffProviderService
      */
     private function fetchTariffs(): array
     {
-        $response = $this->httpClient->get($this->tariffProviderUri);
-        if ($response->successful()) {
-            $tariffs = $response->json();
+        try {
+            $response = $this->httpClient->get($this->tariffProviderUri);
+            if ($response->successful()) {
+                $tariffs = $response->json();
 
-            if (!is_array($tariffs)) {
-                throw new InvalidTariffProviderException();
+                if (!is_array($tariffs)) {
+                    throw new InvalidTariffProviderException();
+                }
+
+                return $tariffs;
             }
-
-            return $tariffs;
+            return [];
+        } catch (InvalidTariffProviderException $e) {
+            throw new InvalidTariffProviderException();
+        } catch (Exception $e) {
+            throw new TariffProviderException();
         }
-        throw new TariffProviderException();
     }
 
     /**

@@ -91,7 +91,6 @@ class TariffProviderServiceTest extends TestCase
     public function testErrorFetchingData()
     {
         $this->httpClient->shouldReceive('get')->andReturnSelf();
-        $this->httpClient->shouldReceive('successful')->andReturn(false);
 
         $this->expectExceptionMessage(HttpStatus::MESSAGES[HttpStatus::TARIFF_PROVIDER_ERROR]);
         $this->tariffProviderService->getTariffs();
@@ -99,10 +98,9 @@ class TariffProviderServiceTest extends TestCase
 
     public function testErrorFetchingDataException()
     {
-        $this->httpClient->shouldReceive('get')->andReturnSelf();
-        $this->httpClient->shouldReceive('successful')->andReturn(false);
+        $this->httpClient->shouldReceive('get')->andThrow(new RuntimeException());
 
-        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage(HttpStatus::MESSAGES[HttpStatus::TARIFF_PROVIDER_ERROR]);
         $this->tariffProviderService->getTariffs();
     }
 

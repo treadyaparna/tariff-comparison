@@ -31,7 +31,6 @@ class PackagedTariffStrategy implements TariffStrategyInterface
      */
     public function calculateAnnualConsumptionCosts($tariff, int $annualConsumption): float
     {
-        // TODO: Check if the calculation is correct
         // Calculate the base annual cost
         $baseAnnualCost = $tariff->baseCost->euros;
 

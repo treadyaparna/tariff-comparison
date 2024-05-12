@@ -27,7 +27,6 @@ class BasicTariffStrategy implements TariffStrategyInterface
      */
     public function calculateAnnualConsumptionCosts($tariff, int $annualConsumption): float
     {
-        // todo: check if the calculation is correct
         $baseAnnualCost = $tariff->baseCost->euros * 12;
         $additionalKwhAnnualCost = $tariff->additionalKwhCost->euros * $annualConsumption;
         return $baseAnnualCost + $additionalKwhAnnualCost;

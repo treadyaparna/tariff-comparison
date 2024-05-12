@@ -1,14 +1,14 @@
-# Electricity Tariff Comparison Platform
+# Electricity Tariff Comparison Service
 
-This platform allows users to compare electricity prices and estimate their annual costs based on their consumption.
-The platform uses [an external provider of electricity tariffs](https://github.com/treadyaparna/vx-tariff-provider) to fetch all available tariffs to accurate pricing information.
+This service allows users to compare electricity prices and estimate their annual costs based on their consumption.
+The service uses [an external provider of electricity tariffs](https://github.com/treadyaparna/verivox-tariff-provider) to fetch all available tariffs to accurate pricing information.
 
 
 ### Tariff Provider Service
 
-GitHub Repository: https://github.com/treadyaparna/vx-tariff-provider
+GitHub Repository: https://github.com/treadyaparna/verivox-tariff-provider
 
-The platform receives tariff data in the following format:
+The service receives tariff data in the following format:
 
 ```json
 [
@@ -47,8 +47,12 @@ Calculation Model,
   Calculation: base costs per month are 5 € + consumption costs 22 cents/kWh.
   
   _Examples_:
-  - Consumption: 3500 kWh/year => Annual costs = 830 €/year (5€ * 12 months = 60 € base costs + 3500 kWh/year * 22 cent/kWh = 770 € consumption costs)
-  - Consumption: 4500 kWh/year => Annual costs = 1050 €/year (5€ * 12 months = 60 € base costs + 4500 kWh/year * 22 cent/kWh = 990 € consumption costs)
+  - Consumption: 3500 kWh/year
+    
+    Annual costs = 830 €/year (5€ * 12 months = 60 € base costs + 3500 kWh/year * 22 cent/kWh = 770 € consumption costs)
+  - Consumption: 4500 kWh/year
+  
+    Annual costs = 1050 €/year (5€ * 12 months = 60 € base costs + 4500 kWh/year * 22 cent/kWh = 990 € consumption costs)
 
 - **Product B Type: 2 - Packaged Tariff**
 
@@ -82,11 +86,15 @@ Calculation Model,
 ]
 ```
 
+## Prerequisites
+
+The [Tariff Provider Service](https://github.com/treadyaparna/verivox-tariff-provider) should be running to fetch the tariffs.
+
 ## Functional Requirements
 
 - The service must fetch electricity tariff information from an external provider.
 - The service should calculate annual costs based on user input consumption and tariff details.
-- The service must compare tariffs and return results sorted by annual costs in ascending order.
+- The service must return results sorted by annual costs in ascending order.
 - The service should validate user input to ensure it falls within acceptable ranges.
 - The service should provide API documentation for the available endpoints.
 - The service should be tested to ensure that it functions as expected and meets quality standards.
@@ -206,9 +214,9 @@ To seamlessly integrate additional tariffs into the system, follow these steps:
 
 - Generate a new DTO class within `Services/Clients/TariffProviders/DataTransferObjects` to encapsulate tariff details.
 - Modify the `match()` method within `TariffDTOFactory` to incorporate the new DTO class for mapping tariff details.
-- Develop a new class that implements the `TariffInterface`.
+- Develop a new class that implements the `TariffStrategyInterface`.
 - Implement the `supports` method to verify if the tariff type is supported by the class.
 - Implement the `calculateAnnualCost` method to determine the annual cost based on the tariff details and user consumption.
 - Register the new tariff class within the `TariffComparisonServiceProvider` to enable its usage within the system.
 
-By adhering to these steps and leveraging the strategy design pattern, to enhance the system's flexibility to seamlessly integrate various tariffs.
+By adhering to these steps and leveraging the **strategy design pattern**, I aim to enhance the system's flexibility to seamlessly integrate various tariffs. This approach ensures that the system can accommodate _new tariffs with minimal changes and maintain a high level of extensibility_. The only code changes required will be in the factory and provider, not in any service class.

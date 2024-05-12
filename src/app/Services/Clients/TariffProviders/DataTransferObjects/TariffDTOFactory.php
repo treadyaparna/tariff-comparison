@@ -10,6 +10,9 @@ class TariffDTOFactory
     const BASIC_TARIFF = 1;
     const PACKAGED_TARIFF = 2;
 
+    /**
+     * @throws InvalidTariffTypeException
+     */
     public static function create(array $tariff): BaseTariffDTO
     {
         if (!isset($tariff['type'])) {
